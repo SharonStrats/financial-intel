@@ -1,0 +1,62 @@
+body {
+  padding: 50px;
+ 	background: -moz-linear-gradient(top, #000000, darkgrey);
+ 	background: -ms-linear-gradient(top, #000000, darkgrey);
+ 	background: -webkit-linear-gradient(top, #000000,  darkgrey);
+  background-attachment: fixed;
+  color: #333;
+}
+
+
+blockquote.twitter-tweet {
+	display: none;
+}
+
+a {
+	text-decoration: none;
+}
+
+h1 {
+    font-family: 'Open Sans', sans-serif;
+	font-size: 40px;
+	margin: 0 0 15px 0;
+	line-height: 40px;
+	color: #FFF0E0;
+	font-weight: bold;
+}
+
+#twitter-logo {
+	display: inline-block;
+	height: 44px;
+	width: auto;
+	position: relative;
+	top: -6px;
+	margin: 0 10px 0 0;
+}
+
+.tweet-item {
+	margin-bottom: 10px;
+}
+
+.tweet-details {
+	padding-left: 15px;
+	font-size: 11px;
+	color: #999;
+}
+
+.tweet-details a {
+	color: #999;
+}
+
+#search-container {
+	margin-bottom: 20px;
+}
+
+.user-search {
+	margin-bottom: 20px;
+}
+
+.load-tweets-btn {
+	display: inline-block;
+}
+
