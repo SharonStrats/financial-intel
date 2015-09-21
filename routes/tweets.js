@@ -6,7 +6,7 @@ var config = require('../config');
 // instantiate Twit module
 var twitter = new Twit(config.twitter);
 
-var TWEET_COUNT = 50;
+var TWEET_COUNT = 100;
 var MAX_WIDTH = 305;
 var OEMBED_URL = 'statuses/oembed';
 var USER_TIMELINE_URL = 'lists/statuses';
@@ -36,7 +36,7 @@ router.get('/lists/statuses/:slug/:owner_screen_name', function(req, res) {
     var i = 0, len = tweets.length;
    
     for(i; i < len; i++) {
-    if (tweets[i].user.screen_name != 'ritholtz') {
+    if (tweets[i].user.screen_name != ' ') {
          getOEmbed(tweets[i]);
            } }
   }); 
@@ -58,7 +58,7 @@ router.get('/lists/statuses/:slug/:owner_screen_name', function(req, res) {
       oEmbedTweets.push(tweet);
 
       // do we have oEmbed HTML for all Tweets?
-      if (oEmbedTweets.length == 15) {
+      if (oEmbedTweets.length == 100) {
         res.setHeader('Content-Type', 'application/json');
         res.send(oEmbedTweets);
       }
