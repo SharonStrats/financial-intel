@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" ng-app="Twitter">
 <head>
-    <meta> charset="utf-8">
+   
     <title><%= title %></title>
     	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
@@ -15,6 +15,9 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
 	<script src="//platform.twitter.com/widgets.js"></script>
 	<script src="/javascripts/TweetList.js"></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
 </head>
 <body>
     
@@ -30,7 +33,7 @@
 	
 
 		<div class="row clearfix">
-			<div class="col-lg-12" "col-xs-12">
+			<div class="col-lg-12" "col-xs-4">
 
 		    	<div id="tweet-list">
 
@@ -51,7 +54,14 @@
 
 		  </div>
   	</div>
+		<div class="row">
+			<div class="col-lg-12">
 
+				<!-- this button will trigger the getMoreTweets function in the javascript controller -->
+		  	<button type="button" class="load-more-btn btn btn-default" ng-click="getMoreTweets()">Get More Tweets</button>
+
+	  	</div>
+	  </div>
 
 
 	</div>

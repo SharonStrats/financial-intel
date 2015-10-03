@@ -6,8 +6,8 @@ var config = require('../config');
 // instantiate Twit module
 var twitter = new Twit(config.twitter);
 
-var TWEET_COUNT = 100;
-var MAX_WIDTH = 305;
+var TWEET_COUNT = 50;
+var MAX_WIDTH = 385;
 var OEMBED_URL = 'statuses/oembed';
 var USER_TIMELINE_URL = 'lists/statuses';
 
@@ -58,7 +58,7 @@ router.get('/lists/statuses/:slug/:owner_screen_name', function(req, res) {
       oEmbedTweets.push(tweet);
 
       // do we have oEmbed HTML for all Tweets?
-      if (oEmbedTweets.length == 100) {
+      if (oEmbedTweets.length == 50) {
         res.setHeader('Content-Type', 'application/json');
         res.send(oEmbedTweets);
       }

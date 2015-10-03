@@ -1,8 +1,8 @@
 body {
   padding: 50px;
- 	background: -moz-linear-gradient(top, #000000, darkgrey);
- 	background: -ms-linear-gradient(top, #000000, darkgrey);
- 	background: -webkit-linear-gradient(top, #000000,  darkgrey);
+ 	background: -moz-linear-gradient(top, #000000, lightslategrey);
+ 	background: -ms-linear-gradient(top, #000000, lightslategrey);
+ 	background: -webkit-linear-gradient(top, #000000, lightslategrey);
   background-attachment: fixed;
   color: #333;
 }
@@ -10,6 +10,7 @@ body {
 
 blockquote.twitter-tweet {
 	display: none;
+    column-width: 360;
 }
 
 a {
@@ -21,7 +22,7 @@ h1 {
 	font-size: 40px;
 	margin: 0 0 15px 0;
 	line-height: 40px;
-	color: #FFF0E0;
+	color: whitesmoke;
 	font-weight: bold;
 }
 
@@ -38,6 +39,7 @@ h1 {
 	margin-bottom: 10px;
 }
 
+
 .tweet-details {
 	padding-left: 15px;
 	font-size: 11px;
@@ -46,14 +48,6 @@ h1 {
 
 .tweet-details a {
 	color: #999;
-}
-
-#search-container {
-	margin-bottom: 20px;
-}
-
-.user-search {
-	margin-bottom: 20px;
 }
 
 .load-tweets-btn {
