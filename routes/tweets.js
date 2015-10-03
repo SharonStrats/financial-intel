@@ -7,7 +7,7 @@ var config = require('../config');
 var twitter = new Twit(config.twitter);
 
 var TWEET_COUNT = 50;
-var MAX_WIDTH = 385;
+var MAX_WIDTH = 365;
 var OEMBED_URL = 'statuses/oembed';
 var USER_TIMELINE_URL = 'lists/statuses';
 

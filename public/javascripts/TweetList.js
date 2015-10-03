@@ -13,7 +13,7 @@ app.controller('TweetList', function($scope, $resource, $timeout) {
 
       // initiate masonry.js
       $scope.msnry = new Masonry('#tweet-list', {
-        columnWidth: 400,
+        columnWidth: 380,
         itemSelector: '.tweet-item',
         transitionDuration: 0,
         gutter: 5,
