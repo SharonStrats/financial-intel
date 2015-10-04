@@ -5,6 +5,7 @@ body {
  	background: -webkit-linear-gradient(top, #000000, lightslategrey);
   background-attachment: fixed;
   color: #333;
+  padding-top: 50px;    
 }
 
 
@@ -19,13 +20,17 @@ a {
 
 h1 {
     font-family: 'Open Sans', sans-serif;
-	font-size: 30px;
+	font-size: 34px;
 	margin: 0 0 15px 0;
 	line-height: 40px;
 	color: whitesmoke;
-	font-weight: bold;
+   	
 }
 
+#tweet-list {
+    position:relative;
+    
+}
 #twitter-logo {
 	display: inline-block;
 	height: 44px;
