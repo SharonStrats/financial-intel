@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var ctrlExperts = require('../routes/news');
 
-/* GET home page. */
-router.get('/', function(req, res) {
-  res.render('index', { title: 'Your Financial Intel' });
-});
+
+
+
+router.get('/', ctrlExperts.expertInfo);
+router.get('/second', ctrlExperts.homelist);
 
 module.exports = router;

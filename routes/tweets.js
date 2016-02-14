@@ -2,14 +2,23 @@ var express = require('express');
 var router = express.Router();
 var Twit = require('twit');
 var config = require('../config');
+var google = require('google');
 
 // instantiate Twit module
 var twitter = new Twit(config.twitter);
 
+// you can play with the width here
 var TWEET_COUNT = 50;
 var MAX_WIDTH = 345;
 var OEMBED_URL = 'statuses/oembed';
 var USER_TIMELINE_URL = 'lists/statuses';
+
+   google('Barry Ritholtz 2/13/2016',function(err, response, body) {
+    var data = [];
+    for (var i = 0; i < body.length; ++i) {
+      if (body[i].title != '' && body[i].description != '' && body[i].link != '')
+       data.push(body[i])
+     }});
 
 router.get('/lists/statuses/:slug/:owner_screen_name', function(req, res) {
 
@@ -39,6 +48,7 @@ router.get('/lists/statuses/:slug/:owner_screen_name', function(req, res) {
     if (tweets[i].user.screen_name != ' ') {
          getOEmbed(tweets[i]);
            } }
+
   }); 
   /**
    * requests the oEmbed html
@@ -57,8 +67,10 @@ router.get('/lists/statuses/:slug/:owner_screen_name', function(req, res) {
       tweet.oEmbed = data;
       oEmbedTweets.push(tweet);
 
+
       // do we have oEmbed HTML for all Tweets?
       if (oEmbedTweets.length == 50) {
+        oEmbedTweets.push(data[0]);
         res.setHeader('Content-Type', 'application/json');
         res.send(oEmbedTweets);
       }

@@ -1,5 +1,20 @@
-var app = angular.module('Twitter', ['ngResource', 'ngSanitize']);
+var app = angular.module('Twitter', ['ngResource', 'ngSanitize','ngRoute']);
 
+/* app.config(function($routeProvider) {
+
+  $routeProvider
+
+   .when('/', {
+       templateUrl: 'tweets.html',
+       controller: 'TweetList'
+   })
+
+   .when('/second', {
+       templateUrl: 'second.html',
+       controller:  'newsController'
+   })
+
+}); */
 app.controller('TweetList', function($scope, $resource, $timeout) {
 
     /**
@@ -12,12 +27,13 @@ app.controller('TweetList', function($scope, $resource, $timeout) {
       $scope.tweetsResult = [];
 
       // initiate masonry.js
+      //you can play with the columnWidth, blockquote and in the tweets.js
       $scope.msnry = new Masonry('#tweet-list', {
-        columnWidth: 360,
+        columnWidth: 345,
         itemSelector: '.tweet-item',
         transitionDuration: 0,
         gutter: 10,
-        isFitWidth: true
+        fitWidth: true
       });
 
       // layout masonry.js on widgets.js loaded event
@@ -88,3 +104,10 @@ app.controller('TweetList', function($scope, $resource, $timeout) {
 
     init();
 });
+
+// Second controller for the newsController
+app.controller('newsController', ['$scope', '$log', '$routeParams', function($scope, $log, $routeParams) {
+    
+    $scope.num = $routeParams.num || 1;
+    
+}]);

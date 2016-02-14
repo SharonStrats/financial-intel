@@ -1,0 +1,5 @@
+ <ul>
+    <% links.forEach(function(link) { %>
+      <li><%= link.title %></li>
+    <% }); %>
+    </ul>
