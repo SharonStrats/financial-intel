@@ -5,7 +5,7 @@ var ctrlExperts = require('../routes/news');
 
 
 
-router.get('/', ctrlExperts.expertInfo);
-router.get('/second', ctrlExperts.homelist);
+//router.get('/', ctrlExperts.expertInfo);
+router.get('/', ctrlExperts.homelist);
 
 module.exports = router;

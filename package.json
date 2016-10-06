@@ -6,6 +6,7 @@
     "start": "node app.js"
   },
   "dependencies": {
+    "bootstrap-sass": "^3.3.7",
     "ejs": "~0.8.5",
     "express": "~4.2.0",
     "google": "^1.4.0",

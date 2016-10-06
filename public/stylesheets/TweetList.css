@@ -1,26 +1,67 @@
 body {
-  padding: 50px;
  	background: -moz-linear-gradient(top, #252525, #252525);
  	background: -ms-linear-gradient(top, #252525, #252525);
  	background: -webkit-linear-gradient(top, #252525, #252525);
   background-attachment: fixed;
   color: #333;
-  padding-top: 50px;    
+  
 }
+
 @font-face { font-family: 'nevis'; font-weight: bold; src: url('nevis.ttf');}
 
+/* changing the column-width here, seems to have some effect */
+/* color: #72A0C1; maybe try this for links, air force blue */
+/*blockquote.twitter-tweet {
+  column-width: 320;
+  float: left;
+  display: inline-block;
+} */
+h2 {
+  color: white;
+}
+h3 {
+  color: black;
+}
+   
+.grid-item {
+  border-radius: 5px;
+  width:  320px;
+  height: auto;
+  float: left;
+  border: 2px solid #333; 
+  list-style-type: none;
+  font-style:;
+  background-color: white;
+  color: black;
+  text-wrap: suppress;
+  display: inline-block;
+  margin: 10px;
+ }
+.container-pic {
+  background-color: blue;
+  width: 100%;
+  height: 150px;
+}
+a.links {
+   color: #2B7BB9;
+   text-wrap: ;
+      }
 
-
-a {
+footer {
+    background-color: #252525;
+   }   
+   
+a:link {
 	text-decoration: none;
+
 }
 
 .navbar-inverse .navbar-brand
 {
     position: absolute;
-    font-family: 'nevis', nevis;
+    font-family: 'Tinos', serif;
 	font-size: 30px;
-    color: #1BFD08;
+    color: whitesmoke;
     font-weight: bold;
     width: 100%;
     left: 0;
@@ -30,7 +71,7 @@ a {
 }
 
 h1 {
-    font-family: 'nevis', nevis;
+    font-family: 'Tinos', serif;
 	font-size: 34px;
 	margin: 0 0 15px 15px;
 	line-height: 40px;
@@ -42,17 +83,11 @@ h1 {
     position:relative;
     
 }
-#twitter-logo {
-	display: inline-block;
-	height: 44px;
-	width: auto;
-	position: relative;
-	top: -6px;
-	margin: 0 10px 0 0;
-}
+
 
 .tweet-item {
 	margin-bottom: 10px;
+	width: 320px;
 }
 
 
@@ -72,13 +107,25 @@ h1 {
 /* MEDIA QUERIES - for different devices */
 /* max width means, do something when it's at least that width */
 /* min width means, do something when it's under that width */
+/* 480 is a phone */
 @media(max-width:480px) {
 
 body {
-	padding: 0px;
+  padding: 50px 0px 0px 0px;
+  margin-left: -15px;
+}
+.row-fluid {
+   margin: -5px;
 }
 h1 {
-   font-size: 30px;
-}
+   font-size: 10px;
+   margin-left: -15px;
 
 }
+
+.item {
+  float: left;
+  padding: 0;
+  width: 100%;
+  margin-left: -5px;
+  }

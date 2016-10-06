@@ -8,19 +8,25 @@ var google = require('google');
 var twitter = new Twit(config.twitter);
 
 // you can play with the width here
-var TWEET_COUNT = 50;
-var MAX_WIDTH = 345;
+var TWEET_COUNT = 10;
+var MAX_WIDTH = 320;
 var OEMBED_URL = 'statuses/oembed';
 var USER_TIMELINE_URL = 'lists/statuses';
+   var googleSearch = [];
 
    google('Barry Ritholtz 2/13/2016',function(err, response, body) {
-    var data = [];
+ 
     for (var i = 0; i < body.length; ++i) {
+      var oEmbed = {html: ""};
       if (body[i].title != '' && body[i].description != '' && body[i].link != '')
-       data.push(body[i])
+        oEmbed  = {html: "<blockquote class=\"twitter-tweet\ data-width = \"345\"><p> testing </p></blockquote>"};
+      body[i].oEmbed = oEmbed;
+      googleSearch.push(body[i]);
+  
      }});
+   
 
-router.get('/lists/statuses/:slug/:owner_screen_name', function(req, res) {
+testing = router.get('/lists/statuses/:slug/:owner_screen_name', function(req, res) {
 
   var oEmbedTweets = [], tweets = [],
 
@@ -40,14 +46,16 @@ router.get('/lists/statuses/:slug/:owner_screen_name', function(req, res) {
   twitter.get(USER_TIMELINE_URL, params, function (err, data, resp) {
   
     tweets = data;
-     //  
-        
+     // 
+    console.log('Error: ' + err); 
+     
     var i = 0, len = tweets.length;
    
     for(i; i < len; i++) {
     if (tweets[i].user.screen_name != ' ') {
          getOEmbed(tweets[i]);
            } }
+           
 
   }); 
   /**
@@ -69,8 +77,8 @@ router.get('/lists/statuses/:slug/:owner_screen_name', function(req, res) {
 
 
       // do we have oEmbed HTML for all Tweets?
-      if (oEmbedTweets.length == 50) {
-        oEmbedTweets.push(data[0]);
+      if (oEmbedTweets.length == 10) {
+        oEmbedTweets.push(googleSearch.oEmbed);
         res.setHeader('Content-Type', 'application/json');
         res.send(oEmbedTweets);
       }

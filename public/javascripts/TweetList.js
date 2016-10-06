@@ -15,7 +15,7 @@ var app = angular.module('Twitter', ['ngResource', 'ngSanitize','ngRoute']);
    })
 
 }); */
-app.controller('TweetList', function($scope, $resource, $timeout) {
+app.controller('TweetList', function($scope, $resource, $timeout, $log) {
 
     /**
      * init controller and set defaults
@@ -29,11 +29,11 @@ app.controller('TweetList', function($scope, $resource, $timeout) {
       // initiate masonry.js
       //you can play with the columnWidth, blockquote and in the tweets.js
       $scope.msnry = new Masonry('#tweet-list', {
-        columnWidth: 345,
+        columnWidth: 300,
         itemSelector: '.tweet-item',
         transitionDuration: 0,
         gutter: 10,
-        fitWidth: true
+        FitWidth: true
       });
 
       // layout masonry.js on widgets.js loaded event
@@ -49,22 +49,22 @@ app.controller('TweetList', function($scope, $resource, $timeout) {
      * requests and processes tweet data
      */
     function getTweets (paging) {
-
+      $log.debug("in Get Tweets");
       var params = {
        action: 'lists/statuses',
         slug: 'finsite',
         owner_screen_name: 'StratsSharon'
    
       };
-   
+      
       if ($scope.maxId) {
         params.max_id = $scope.maxId;
       }
-
+      $log.debug("max id: " + params.max_id);
       // create Tweet data resource
          $scope.tweets = $resource('/tweets/lists/statuses/:slug/:owner_screen_name', params);
 
-          
+         $log.debug("Resource Tweets: " + $scope.tweets); 
      
 
       // GET request using the resource
