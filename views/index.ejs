@@ -1,19 +1,25 @@
 <!doctype html>
-<html lang="en" ng-app="Twitter">
+<html lang="en">
 <head>
-    <title>Financial News | YourFinancialIntel</title>
-    <title><%= title %></title>
+  <title>Financial News | YourFinancialIntel</title>
+  <title><%= title %></title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-      <link rel='stylesheet' href='/stylesheets/TweetList.css' />
+  <!--SAM 07/01/17 Changed the link below to double quotes after upgrading
+      AWS EC2/Beanstalk instance and single quotes preventing css from being used. -->
+  <link rel="stylesheet" href="/stylesheets/TweetList.css"/>
   
 	<link href="https://fonts.googleapis.com/css?family=Tinos" rel="stylesheet"> 
+ 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <!--	<script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script> -->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-	<script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
-  <script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.7.0/moment.min.js"></script>
-*	<script src="//platform.twitter.com/widgets.js"></script>
-	<!-- <script src="/javascripts/TweetList.js"></script> -->
+ <!-- <script src="bundle.js"></script> -->
+	<script src="//platform.twitter.com/widgets.js"></script>
+
+<!-- <script src="/javascripts/TweetList.js"></script> -->
     <!-- script from Google ads -->
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -28,97 +34,232 @@
 <!-- widgets script -->
 <!-- had widgets script here now in saving file -->
 <!-- trying to see if I can load using masonry -->
- <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script>
+<style>
+html, body { height: 100%; }
+body {
+  background: -moz-linear-gradient(top, #252525, #252525);
+  background: -ms-linear-gradient(top, #252525, #252525);
+  background: -webkit-linear-gradient(top, #252525, #252525);
+  background-attachment: fixed;
+  color: #333;
+  
+}
+
+@font-face { font-family: 'nevis'; font-weight: bold; src: url('nevis.ttf');}
+
+/* changing the column-width here, seems to have some effect */
+/* color: #72A0C1; maybe try this for links, air force blue */
+/*blockquote.twitter-tweet {
+  column-width: 320;
+  float: left;
+  display: inline-block;
+} */
+h2 {
+  color: white;
+}
+
+h4, p {
+  color: black;
+}
  
-   $(document).ready(function() {
-    var imgLoad = imagesLoaded('#test');
-    imgLoad.on( 'always', function() {
-    console.log( imgLoad.images.length + ' images loaded' );
-  // detect which image is broken
-  for ( var i = 0, len = imgLoad.images.length; i < len; i++ ) {
-    var image = imgLoad.images[i];
-    var result = image.isLoaded ? 'loaded' : 'broken';
-    console.log( 'image is ' + result + ' for ' + image.img.src );
+.grid {
+ 
+}
+
+.grid-item {
+  float: left;
+  border-radius: 5px;
+  width: 635px;
+  height: auto;
+  border: 2px solid #333; 
+  background-color: white;
+  color: white;
+  display: inline-block;
+  margin: 5px  10px 5px 10px; 
+  padding: 5px 10px 5px 10px;
+
+  overflow: hidden;
+}
+.grid-detail {
+  display: inline-block;
+  float: center;
+  width: 610px;
+  word-wrap: break-word;
+
+}
+.grid-image {
+  float: center;
+  display: inline-block;
+}
+.twitter-tweet {
+  float: left;
+  border-radius: 5px;
+  width: 450px;
+  height: auto;
+  border: 2px solid #333; 
+  background-color: white;
+  color: black;
+  display: inline-block;
+  margin: 5px;
+}
+.container-pic {
+  background-image: url("/images/stockphoto.jpeg");
+  background-size: cover;
+  margin-top: -20px;
+  width: 100%;
+  height: 100px;
+}
+
+a.links {
+  color: #2B7BB9;
+  word-wrap: break-word;
+      }
+
+footer {
+    background-color: #252525;
+   }   
+   
+a:link {
+  text-decoration: none;
+
+}
+
+.navbar-inverse .navbar-brand
+{
+    position: absolute;
+    font-family: 'Tinos', serif;
+    font-size: 30px;
+    color: whitesmoke;
+    font-weight: bold;
+    width: 100%;
+    left: 0;
+    top: 0;
+    text-align: center;
+    margin: auto;
+}
+
+h1 {
+  font-family: 'Tinos', serif;
+  font-size: 34px;
+  margin: 0 0 15px 15px;
+  line-height: 40px;
+  color: whitesmoke;
+    
+}
+
+#tweet-list {
+    position:relative;
+    
+}
+
+
+.tweet-item {
+  margin-bottom: 10px;
+  width: 320px;
+}
+
+
+.tweet-details {
+  padding-left: 15px;
+  font-size: 11px;
+  color: #999;
+}
+
+.tweet-details a {
+  color: #999;
+}
+
+.load-tweets-btn {
+  display: inline-block;
+}
+/* MEDIA QUERIES - for different devices */
+/* max width means, do something when it's at least that width */
+/* min width means, do something when it's under that width */
+/* 480 is a phone */
+@media(max-width:480px) {
+
+body {
+  padding: 50px 0px 0px 0px;
+ 
+}
+
+h1 {
+   font-size: 10px;
+   margin-left: -15px;
+
+}
+
+.grid-item {
+  float: center;
+  padding: 0;
+  width: 95%;
   }
-});
+  .grid-detail {
+    float:center;
+    width: 100%;
+    padding: 5px 5px 5px 10px;
+  }
 
+</style>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
  
-    </script>
-
-
 </head>
 <body>
 
 	<!-- the root element of the view assigned to the TweetList javascript controller-->
 
-<div class="container-pic">
 
-</div>
-<nav class="navbar navbar-inverse">
+<nav style="background-color: #C70039" class="navbar navbar-inverse">
     <!-- Brand and toggle get grouped for better mobile display -->
    <div class="container-fluid">
     <a class="navbar-brand" href="#">YourFinancialIntel</a>
     </div>
  </nav>
+<div class="container-pic">
+</div>
+ <div class="row">
+
+  <!-- var h2=d3.select("body").append("h2").text("Hello Universe"); -->
+
+  </div>
+
   <div class="container-fluid">
-		<div class="row-fluid">
-          <!-- going to pull out the tweets and see if I can make a single page app -->
-     
-      <div id="test" class="masonry">
+ 
+	<div class="row">
+         
+         
+    <div class="col-md-8 grid">
+      <% experts.forEach(function(expert) { %>
+      <div class="grid-item">   
+        <div class="grid-detail"> 
+          <h4><%= expert.title %> </h4>
+          <p> <%= expert.abstract %> </p>
+          <br>
+          <div class="grid-image">
+            <img src='<%= expert.jumbopic %>' alt='Sorry No Picture Available' height="auto" width="100%"> 
+          </div>
+          <br>
+          <a class="links" href ='<%= expert.url %>'><%= expert.url %></a>
+        </div>
 
-        <% experts.forEach(function(expert) {
 
-        if (expert.oEmbed.html === "News") { %>
-          <div class="grid-item">    
-        <h4><%= expert.title %> </h4>
-        <%= expert.description %> 
-  
-        <br>
-           <a class="links" href ='<%= expert.link %>'><%= expert.link %></a>
+        
              </div> 
-             
-        <% } else { %>
-              <div class="grid-item">
-                 <%- expert.oEmbed.html %> 
-               </div>
-               
-    <% } }); %>
+          
+           
+        <% });  %>
+         </div>
+  
+     <div class="col-md-4">
 
-      </div>
-      
-   
-    
-    
-    <!--
-	   <div class="col-lg-4" "col-xs-4">
-                  
-          <div id="tweet-list"> -->
+                     <% tweets.forEach(function(tweet) { %>
 
-            <!-- this div will repeat for every tweet object in the array using a template-expanding directive -->
-         <!--   <div ng-repeat="tweet in tweetsResult" class="tweet-item"> -->
-
-              <!-- sanitized HTML binding -->
-          <!--    <div ng-bind-html="tweet.oEmbed.html"></div> -->
-                 <!-- binding to Tweet source property -->
-                 <!--   <div class="tweet-details"> -->
-                 <!--  Tweeted from <span ng-bind-html="tweet.source"></span> -->
-        <!--      </div>
-            </div>
-          </div> 
-        </div> -->
-
-      </div> 
-  	
-<!--		<div class="row">
-			<div class="col-lg-12"> -->
-
-				<!-- this button will trigger the getMoreTweets function in the javascript controller -->
-	<!--	  	<button type="button" class="load-more-btn btn btn-default" ng-click="getMoreTweets()">Get More Tweets</button>
-
-	  	</div>
-	  </div> -->
-
+                 
+                 <%- tweet.oEmbed.html %> 
+                 
+        <%  }); %> 
+     </div>
+    </div>
 
 	</div>
 	    <!-- Bootstrap core JavaScript

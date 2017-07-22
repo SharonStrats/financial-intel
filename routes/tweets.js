@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Twit = require('twit');
 var config = require('../config');
-var google = require('google');
+
 
 // instantiate Twit module
 var twitter = new Twit(config.twitter);
@@ -12,18 +12,7 @@ var TWEET_COUNT = 10;
 var MAX_WIDTH = 320;
 var OEMBED_URL = 'statuses/oembed';
 var USER_TIMELINE_URL = 'lists/statuses';
-   var googleSearch = [];
 
-   google('Barry Ritholtz 2/13/2016',function(err, response, body) {
- 
-    for (var i = 0; i < body.length; ++i) {
-      var oEmbed = {html: ""};
-      if (body[i].title != '' && body[i].description != '' && body[i].link != '')
-        oEmbed  = {html: "<blockquote class=\"twitter-tweet\ data-width = \"345\"><p> testing </p></blockquote>"};
-      body[i].oEmbed = oEmbed;
-      googleSearch.push(body[i]);
-  
-     }});
    
 
 testing = router.get('/lists/statuses/:slug/:owner_screen_name', function(req, res) {

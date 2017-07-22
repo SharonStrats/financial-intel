@@ -9,7 +9,9 @@
     "bootstrap-sass": "^3.3.7",
     "ejs": "~0.8.5",
     "express": "~4.2.0",
-    "google": "^1.4.0",
+    "imagesloaded": "^4.1.1",
+    "isotope-layout": "^3.0.1",
+    "nyt-top": "^1.0.5",
     "qs": "*",
     "twit": "^1.1.18"
   },
