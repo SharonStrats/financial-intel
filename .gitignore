@@ -5,6 +5,7 @@
 5 
 # Config
 controllers/config.json
+config.js
  
 6 # Runtime data 
 7 pids 

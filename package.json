@@ -8,11 +8,12 @@
   "dependencies": {
     "bootstrap-sass": "^3.3.7",
     "ejs": "~0.8.5",
-    "express": "~4.2.0",
+    "express": "^4.17.1",
     "imagesloaded": "^4.1.1",
     "isotope-layout": "^3.0.1",
     "nyt-top": "^1.0.5",
-    "qs": "*",
+    "qs": "^6.9.4",
+    "sleep-promise": "^8.0.1",
     "twit": "^1.1.18"
   },
   "engines": {
