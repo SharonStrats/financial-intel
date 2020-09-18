@@ -1,23 +1,21 @@
-var express = require('express');
-var router = express.Router();
-var Twit = require('twit');
-var config = require('../config');
-var sleep = require('sleep-promise');
+const express = require('express');
+const router = express.Router();
+const Twit = require('twit');
+const config = require('../config');
+const sleep = require('sleep-promise');
 // instantiate Twit module
-var twitter = new Twit(config.twitter);
-var nytTop = require("nyt-top");
+const twitter = new Twit(config.twitter);
+//const nytTop = require("nyt-top");
 //nytTop.key('not a key'); // set your Top Stories API developer key
 
-
-
 // you can play with the width here
-var TWEET_COUNT = 28;
-var MAX_WIDTH = 320;
-var OEMBED_URL = 'statuses/oembed';
-var USER_TIMELINE_URL = 'lists/statuses';
-var exists;
-var results = [];  // have to define up here, not in call since doing 2 api calls?
-var oEmbedTweets = [], tweets = [],
+const TWEET_COUNT = 100;
+const MAX_WIDTH = 320;
+const OEMBED_URL = 'statuses/oembed';
+const USER_TIMELINE_URL = 'lists/statuses';
+let max_id = 0;
+let results = [];  // have to define up here, not in call since doing 2 api calls?
+let oEmbedTweets = [], tweets = [],
   params = {
     slug: 'finsite',
     owner_screen_name: 'StratsSharon',
@@ -30,7 +28,7 @@ var oEmbedTweets = [], tweets = [],
   }
 */
 
-var renderHomepage = function (req, res, responseBody) {
+let renderHomepage = function (req, res, responseBody) {
   res.render('index', {
     title: 'Your Financial Intel',
     pageHeader: {
@@ -55,23 +53,12 @@ module.exports.expertInfo = function (req, res) {
   });
 }
 
-
-
-function checkExists(item, dataArray) {
-  var exists = false;
-  for (var i = 0; i < dataArray.length; i++) {
-    if (item.title == dataArray[i].title) {
-      return true;
-    };
-  };
-}
-
 /**
    * requests the oEmbed html
    */
-function getOEmbed(req, res, tweet) {
+function getOEmbed(tweet) {
 
-  var params = {
+  let params = {
     "id": tweet.id_str,
     "maxwidth": MAX_WIDTH,
     "hide_thread": true,
@@ -83,7 +70,7 @@ function getOEmbed(req, res, tweet) {
     tweet.oEmbed = data;
     oEmbedTweets.push(tweet);
 
-    // console.log(JSON.stringify(tweet));
+    //console.log(JSON.stringify(tweet));
 
     // do we have oEmbed HTML for all Tweets?
     /*  if (oEmbedTweets.length == 20) {
@@ -98,10 +85,18 @@ function getOEmbed(req, res, tweet) {
   });
 }
 
-
 module.exports.homelist = function (req, res) {
-  oEmbedTweets = [];
-  oEmbedTweets.length = 0;
+
+  if (oEmbedTweets.length !== 0) {
+    params = {
+      slug: 'finsite',
+      owner_screen_name: 'StratsSharon',
+      since_id: max_id
+    };
+    console.log(JSON.stringify(params));
+  }
+  //oEmbedTweets = [];
+  //oEmbedTweets.length = 0;
   /*
   nytTop.section('business', function (err, data) {
     if (err) { console.log(err); } else {
@@ -123,30 +118,33 @@ module.exports.homelist = function (req, res) {
   }
 }); */
 
-  //Trying again from start
+
   twitter.get(USER_TIMELINE_URL, params, async function (err, data, resp) {
-    //tweets = data;
+
     tweets = data;
     //console.log(JSON.stringify(tweets));
-    // 
+
     console.log('Error: ' + err);
 
-    var i = 0, len = tweets.length;
-    var count = 0;
-    console.log("Tweets length: " + tweets.length);
-
-    for (i; i < len; i++) {
+    let count = 0;
+    for (let i = 0; i < tweets.length; i++) {
       // if (tweets[i].user.screen_name != ' ' && tweets[i].user.screen_name != 'ReutersBiz') {
-      getOEmbed(req, res, tweets[i]);
-      count++;
-      //    } 
-    } // end if, for
+      console.log(" id " + tweets[i].id);
+      // the first time I want them all to appear
+      // the second time when the tweet is the one with the max_id
+      // I don't want to add it because having trouble excluding it from request.
+      if (max_id !== tweets[i].id) {
+        getOEmbed(tweets[i]);
+        count++;
+      }
+      if (max_id < tweets[i].id) {
+        max_id = tweets[i].id;
+      }
+    } // end if, for   console.log("testing");
 
-    console.log('Count: ' + count);
-    if (count >= 25) {
-      await sleep(10 * 1000);
-      renderHomepage(req, res, results);
-    }
+    await sleep(5 * 1000);
+    renderHomepage(req, res, results);
+
   }); //end twitter  
 }; // end homelist export
 
