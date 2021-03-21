@@ -3,7 +3,7 @@ branch-defaults:
     environment: yfi-env
     group_suffix: null
 global:
-  application_name: your-financial-intel
+  application_name: yfi
   branch: null
   default_ec2_keyname: FinancialIntel
   default_platform: Node.js 12 running on 64bit Amazon Linux 2
