@@ -1,18 +1,18 @@
 branch-defaults:
   master:
-    environment: yfi-env
+    environment: null
     group_suffix: null
 global:
-  application_name: yfi
-  branch: null
-  default_ec2_keyname: FinancialIntel
-  default_platform: Node.js 12 running on 64bit Amazon Linux 2
-  default_region: ap-southeast-2
+  application_name: financial-intel
+  branch: master
+  default_ec2_keyname: yfimackeypair
+  default_platform: Node.js 14 running on 64bit Amazon Linux 2
+  default_region: us-west-2
   include_git_submodules: true
   instance_profile: null
   platform_name: null
   platform_version: null
   profile: eb-cli
-  repository: null
+  repository: origin
   sc: git
   workspace_type: Application
