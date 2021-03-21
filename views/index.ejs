@@ -54,26 +54,21 @@
     </div>
   </nav>
 
-  <div class="container-pic">
+  <div class="container__pic">
 
   </div>
-  <div class="container-grid">
-
-    <section>
-      <% let count = 0; let breakOn=Math.floor((tweets.length)/4); let remainder=tweets.length%4 %>
-      <% let firstBreak = (remainder > 0 ? breakOn + 1 : breakOn); %>
-      <% let secondBreak = (remainder > 1 ? breakOn*2+2 : firstBreak+breakOn); %>
-      <% let thirdBreak = (remainder > 1 ? breakOn*3+3 : secondBreak+breakOn); %>
+  <div class="container__grid">
+    <div class="container__grid--column">
+      <% let count = 0 %>
       <% tweets.forEach(function(tweet) { %>
-      <% count++; %>
-      <%  if ((count === firstBreak) || (count === secondBreak) || (count === thirdBreak))  { %>
-    </section>
-    <section>
-      <% } %>
+        <% count++ %>
+ 
       <%- tweet.oEmbed.html %>
-      <%  }); %>
-    </section>
-
+      <% if (count%5 === 0) { %>
+      </div> 
+      <div class="container__grid--column">
+      <% } }); %>
+    </div>    
   </div>
 
 </body>

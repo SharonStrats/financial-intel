@@ -1,78 +1,91 @@
-var express = require('express');
-var router = express.Router();
-var Twit = require('twit');
-var config = require('../config');
-
-
+const express = require('express');
+const router = express.Router();
+const Twit = require('twit');
+const config = require('../config');
+const sleep = require('sleep-promise');
 // instantiate Twit module
-var twitter = new Twit(config.twitter);
+const twitter = new Twit(config.twitter);
+//const nytTop = require("nyt-top");
+//nytTop.key('not a key'); // set your Top Stories API developer key
 
 // you can play with the width here
-var TWEET_COUNT = 10;
-var MAX_WIDTH = 320;
-var OEMBED_URL = 'statuses/oembed';
-var USER_TIMELINE_URL = 'lists/statuses';
-
-   
-
-testing = router.get('/lists/statuses/:slug/:owner_screen_name', function(req, res) {
-
-  var oEmbedTweets = [], tweets = [],
-
+const TWEET_COUNT = 80;
+const MAX_WIDTH = 320;
+const OEMBED_URL = 'statuses/oembed';
+const USER_TIMELINE_URL = 'lists/statuses';
+let max_id = 0;
+let oEmbedTweets = [], tweets = [],
   params = {
-    slug:req.params.slug,
-    owner_screen_name: req.params.owner_screen_name,
+    slug: 'finsite',
+    owner_screen_name: 'StratsSharon',
     count: TWEET_COUNT // how many tweets to return
-  }; 
-  // the max_id is passed in via a query string param
-  if(req.query.max_id) {
-    params.max_id = req.query.max_id;
-  }
-    
+  };
 
+let renderHomepage = function (req, res) {
+  res.render('index', {
+    title: 'Your Financial Intel',
+    pageHeader: {
+      title: 'Expert',
+      strapline: 'Hear what the experts have to say.'
+    },
+    tweets: oEmbedTweets
+  });
 
-  // request data 
-  twitter.get(USER_TIMELINE_URL, params, function (err, data, resp) {
-  
-    tweets = data;
-     // 
-    console.log('Error: ' + err); 
-     
-    var i = 0, len = tweets.length;
-   
-    for(i; i < len; i++) {
-    if (tweets[i].user.screen_name != ' ') {
-         getOEmbed(tweets[i]);
-           } }
-           
+}
 
-  }); 
-  /**
+/**
    * requests the oEmbed html
    */
-  function getOEmbed (tweet) {
+function getOEmbed(tweet) {
 
-    var params = {
-      "id": tweet.id_str,
-      "maxwidth": MAX_WIDTH,
-      "hide_thread": true,
-      "omit_script": true
+  let params = {
+    "id": tweet.id_str,
+    "maxwidth": MAX_WIDTH,
+    "hide_thread": true,
+    "omit_script": true
+  };
+
+  // request data 
+  twitter.get(OEMBED_URL, params, function (err, data, resp) {
+    tweet.oEmbed = data;
+    oEmbedTweets.push(tweet);
+  });
+}
+
+module.exports.homelist = function (req, res) {
+
+  if (oEmbedTweets.length !== 0) {
+    params = {
+      slug: 'finsite',
+      owner_screen_name: 'StratsSharon',
+      since_id: max_id
     };
-
-    // request data 
-    twitter.get(OEMBED_URL, params, function (err, data, resp) {
-      tweet.oEmbed = data;
-      oEmbedTweets.push(tweet);
-
-
-      // do we have oEmbed HTML for all Tweets?
-      if (oEmbedTweets.length == 10) {
-        oEmbedTweets.push(googleSearch.oEmbed);
-        res.setHeader('Content-Type', 'application/json');
-        res.send(oEmbedTweets);
-      }
-    });
+    console.log(JSON.stringify(params));
   }
-});
 
-module.exports = router;
+  twitter.get(USER_TIMELINE_URL, params, async function (err, data, resp) {
+
+    tweets = data;
+    console.log('Error: ' + err);
+    
+    let count = 0;
+    for (let i = 0; i < tweets.length; i++) {
+      // if (tweets[i].user.screen_name != ' ' && tweets[i].user.screen_name != 'ReutersBiz') {
+      console.log(" id " + tweets[i].id);
+      // the first time I want them all to appear
+      // the second time when the tweet is the one with the max_id
+      // I don't want to add it because having trouble excluding it from request.
+      if (max_id !== tweets[i].id) {
+        getOEmbed(tweets[i]);
+        count++;
+      }
+      if (max_id < tweets[i].id) {
+        max_id = tweets[i].id;
+      }
+    } // end if, for   console.log("testing");
+
+    await sleep(5 * 1000);
+    renderHomepage(req, res);
+
+  }); //end twitter  
+}; // end homelist export
